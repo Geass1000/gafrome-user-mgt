@@ -10,9 +10,8 @@ const NestCacheModule = Nest.CacheModule.register({
 
 const modules = [
   Gafrome.Modules.Logger.LoggerModule,
-  Gafrome.Modules.Cache.CacheModule,
-  Gafrome.Modules.Request.RequestModule,
   Gafrome.Modules.Database.DatabaseModule,
+  Gafrome.Modules.Nats.NatsModule,
 ];
 
 @Nest.Global()
@@ -33,11 +32,18 @@ const modules = [
         ...environment.database.mongodb,
       },
     },
+    {
+      provide: Gafrome.Modules.Nats.Constants.DI.Config,
+      useValue: {
+        ...environment.nats,
+      },
+    },
   ],
   exports: [
     ...modules,
     Gafrome.Modules.Logger.Constants.DI.LoggerOptions,
     Gafrome.Modules.Database.Constants.DI.Mongoose.Config,
+    Gafrome.Modules.Nats.Constants.DI.Config,
   ],
 })
 export class CoreModule {}
