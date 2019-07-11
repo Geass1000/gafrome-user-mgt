@@ -1,0 +1,14 @@
+version: '3.7'
+
+networks:
+  app-net:
+    external: true
+
+services:
+  gafrome-user-mgt:
+    image: gafrome-user-mgt:latest
+    networks:
+      - app-net
+    command: npm run watch
+
+# docker-compose -f ./docker-compose.prod.yml up
